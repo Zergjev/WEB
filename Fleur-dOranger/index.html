@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Landing Page</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --fg: #e8edf7;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--fg); background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%);
+      line-height: 1.5;
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+
+    .card {
+      width: min(100%, 980px);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    header {
+      padding: 28px 28px 8px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { font-weight: 700; letter-spacing: .2px; }
+    .pill { color: var(--muted); font-size: 14px; }
+
+    .hero {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 0; align-items: stretch;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .left { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+    h1 { margin: 0; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.1; }
+    p.lede { margin: 0; color: var(--muted); font-size: clamp(16px, 2.2vw, 18px); }
+
+    /* Auto-scrolling text (vertical ticker) */
+    .ticker {
+      height: 120px; overflow: hidden; position: relative; border: 1px dashed rgba(255,255,255,.12);
+      border-radius: 12px; padding: 8px 12px; background: rgba(0,0,0,.12);
+    }
+    .ticker ul { list-style: none; margin: 0; padding: 0; }
+    .ticker li { padding: 6px 0; font-size: clamp(16px, 2vw, 18px); }
+
+    /* duplicate list for seamless loop */
+    .ticker-track { position: absolute; width: 100%; will-change: transform; }
+    .ticker-track.animate { animation: scrollUp linear infinite; }
+    @keyframes scrollUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    .right { position: relative; }
+    .video-wrap { position: relative; width: 100%; padding-top: 56.25%; /* 16:9 */ background: #111; }
+    .video-wrap iframe, .video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-left: 1px solid rgba(255,255,255,0.08); }
+
+    .cta {
+      display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--accent);
+      color: #041226; border-radius: 12px; font-weight: 700; text-decoration: none; width: fit-content;
+      box-shadow: 0 8px 24px rgba(96,165,250,.35);
+    }
+    .cta small { opacity: .85; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <header>
+      <div class="brand">Your Brand</div>
+      <div class="pill">Landing demo</div>
+    </header>
+
+    <section class="hero" aria-label="Hero">
+      <div class="left">
+        <h1>Auto‑scrolling highlights + video</h1>
+        <p class="lede">Replace the text below with your own messages. The list scrolls automatically in a seamless loop.</p>
+
+        <div class="ticker" id="ticker">
+          <!-- We render two copies of the same list for a continuous loop -->
+          <div class="ticker-track" id="trackA">
+            <ul>
+              <li>Fast setup: just one HTML file.</li>
+              <li>Host it for free on GitHub Pages or Netlify.</li>
+              <li>Share with a QR code in seconds.</li>
+              <li>Works great on mobile.</li>
+              <li>Embed your Google Drive video on the right.</li>
+            </ul>
+          </div>
+          <div class="ticker-track" id="trackB">
+            <ul>
+              <li>Fast setup: just one HTML file.</li>
+              <li>Host it for free on GitHub Pages or Netlify.</li>
+              <li>Share with a QR code in seconds.</li>
+              <li>Works great on mobile.</li>
+              <li>Embed your Google Drive video on the right.</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="cta" href="#" id="cta">
+          Open Video <small>(or replace this with your CTA)</small>
+        </a>
+      </div>
+
+      <div class="right">
+        <div class="video-wrap">
+          <!-- Option A: Google Drive PREVIEW embed (replace 1LrInamCm7kH26BmsHRJ2TH1r2Qtxn2bz below) -->
+          <!-- Get your 1LrInamCm7kH26BmsHRJ2TH1r2Qtxn2bz from a Drive share link like https://drive.google.com/file/d/1LrInamCm7kH26BmsHRJ2TH1r2Qtxn2bz/view -->
+          <iframe
+            id="drivePlayer"
+            src="https://drive.google.com/file/d/1LrInamCm7kH26BmsHRJ2TH1r2Qtxn2bz/preview"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="Embedded video from Google Drive"></iframe>
+
+          <!-- Option B: Direct MP4 (if you host an .mp4 file somewhere that supports direct serving) -->
+          <!-- <video controls playsinline autoplay muted loop>
+            <source src="https://YOUR-CDN.com/path/video.mp4" type="video/mp4" />
+          </video> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ------- Ticker autoscroll (seamless loop) -------
+    const trackA = document.getElementById('trackA');
+    const trackB = document.getElementById('trackB');
+    const ticker = document.getElementById('ticker');
+
+    function syncHeights() {
+      // Set the animation to cover exactly two stacks worth of height
+      const totalHeight = trackA.offsetHeight + 12; // small buffer
+      const duration = Math.max(12, (totalHeight / 24)); // seconds; slower for taller lists
+      [trackA, trackB].forEach((el, i) => {
+        el.style.top = (i === 0 ? 0 : totalHeight/2) + 'px';
+        el.style.animationDuration = duration + 's';
+        el.classList.add('animate');
+      });
+    }
+
+    window.addEventListener('load', syncHeights);
+    window.addEventListener('resize', () => {
+      [trackA, trackB].forEach(el => el.classList.remove('animate'));
+      requestAnimationFrame(() => requestAnimationFrame(syncHeights));
+    });
+
+    // Optional: make the CTA open the same Drive video in a new tab
+    document.getElementById('cta').addEventListener('click', (e) => {
+      e.preventDefault();
+      const iframe = document.getElementById('drivePlayer');
+      const url = iframe?.getAttribute('src');
+      if (url) window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
+
