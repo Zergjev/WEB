@@ -116,6 +116,12 @@
       white-space: pre-line;               /* respects new lines */
     }
 
+    /* NEW: lead-in blank space before the first line appears.
+       Increase height = longer delay; decrease = shorter delay. */
+    .scroll-spacer {
+      height: 110px; /* LEAD-IN BLANK SPACE (tune this) */
+    }
+
     .scroll-text b,
     .scroll-text strong { color: rgba(255, 192, 0, .98); }
 
@@ -168,6 +174,7 @@
 
     @media (max-width: 360px) {
       .ticker { height: 240px; }
+      .scroll-spacer { height: 90px; } /* slightly shorter on tiny phones */
     }
   </style>
 </head>
@@ -182,7 +189,9 @@
 
         <div class="ticker" id="ticker" aria-label="Texto en desplazamiento automático">
           <div class="ticker-track" id="trackA">
-            <div class="scroll-text" id="scrollTextA"><strong>QUÍMICA</strong>
+            <div class="scroll-text" id="scrollTextA">
+              <div class="scroll-spacer"></div>
+              <strong>QUÍMICA</strong>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
 ‘Khēmeía’ (χημεία) 
@@ -228,11 +237,14 @@ Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
 delante de uno, en un espacio de experimentación creativa, 
 combinando esencias y elementos con precisión y rigurosidad técnica, 
 para lograr la evocación deseada. Una experiencia alquímica, 
-una chispa de química.</div>
+una chispa de química.
+            </div>
           </div>
 
           <div class="ticker-track" id="trackB" aria-hidden="true">
-            <div class="scroll-text" id="scrollTextB"><strong>QUÍMICA</strong>
+            <div class="scroll-text" id="scrollTextB">
+              <div class="scroll-spacer"></div>
+              <strong>QUÍMICA</strong>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
 ‘Khēmeía’ (χημεία) 
@@ -278,7 +290,8 @@ Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
 delante de uno, en un espacio de experimentación creativa, 
 combinando esencias y elementos con precisión y rigurosidad técnica, 
 para lograr la evocación deseada. Una experiencia alquímica, 
-una chispa de química.</div>
+una chispa de química.
+            </div>
           </div>
         </div>
 
@@ -290,7 +303,7 @@ una chispa de química.</div>
           <!-- Vimeo embed (autoplay on mobile requires muted=1) -->
           <iframe
             id="vimeoPlayer"
-            src="https://player.vimeo.com/video/1149054003?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
+            src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen
             title="Fleur d’Oranger video">
@@ -334,7 +347,7 @@ una chispa de química.</div>
     // CTA: open Vimeo page in a new tab
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('https://vimeo.com/1149054003', '_blank');
+      window.open('https://vimeo.com/1149058259', '_blank');
     });
   </script>
 </body>
