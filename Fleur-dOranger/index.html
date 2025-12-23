@@ -9,8 +9,8 @@
       --bg: #0b0f19;        /* Background color of the landing */
       --fg: #e8edf7;        /* Main text color */
       --muted: #94a3b8;     /* Secondary / muted text */
-      --title: #FFC000;    /* Title color: Fleur d'Oranger */
-      --accent: #FFAC1C;   /* Accent color: borders, highlights */
+      --title: #FFC000;     /* Title color: Fleur d'Oranger */
+      --accent: #FFAC1C;    /* Accent color: borders, highlights */
     }
 
     * { box-sizing: border-box; }
@@ -69,7 +69,7 @@
     .lede {
       margin: 0;
       text-align: center;                  /* SUBTITLE ALIGNMENT */
-      color: rgba(255, 172, 28, .92);       /* SUBTITLE COLOR */
+      color: rgba(255, 172, 28, .92);      /* SUBTITLE COLOR */
       font-weight: 700;
       letter-spacing: .12em;               /* SUBTITLE LETTER SPACING */
       text-transform: uppercase;
@@ -88,7 +88,6 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
     }
 
-    /* One long column of text */
     .ticker-track {
       position: absolute;
       left: 14px;
@@ -110,17 +109,16 @@
     }
 
     .scroll-text {
-      font-size: clamp(17px, 3.8vw, 20px); /* SCROLL TEXT SIZE: increase/decrease these values */
-      line-height: 1.7;           /* fixes overlap */
+      font-size: clamp(17px, 3.8vw, 20px); /* SCROLL TEXT SIZE */
+      line-height: 1.7;                    /* prevents overlap */
       letter-spacing: .01em;
       color: rgba(232, 237, 247, .95);
-      white-space: pre-line;      /* respects new lines */
+      white-space: pre-line;               /* respects new lines */
     }
 
     .scroll-text b,
     .scroll-text strong { color: rgba(255, 192, 0, .98); }
 
-    /* subtle separator line to hint 'scrolling' */
     .ticker:before {
       content: "";
       position: absolute;
@@ -169,7 +167,6 @@
     }
     .cta small { opacity: .9; font-weight: 600; }
 
-    /* slightly more breathing room on very small phones */
     @media (max-width: 360px) {
       .ticker { height: 240px; }
     }
@@ -185,105 +182,104 @@
         <p class="lede">*QUÍMICA</p>
 
         <div class="ticker" id="ticker" aria-label="Texto en desplazamiento automático">
-          <!-- We render two copies of the same text for a continuous loop -->
           <div class="ticker-track" id="trackA">
             <div class="scroll-text" id="scrollTextA"><strong>QUÍMICA</strong>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
-              ‘Khēmeía’ (χημεία) 
-              que significa ‘fluir’ (Khúma) 
-              y al mismo tiempo significa 
-              ‘verter juntos’ (Khéo). 
-              ‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
-              
+‘Khēmeía’ (χημεία) 
+que significa ‘fluir’ (Khúma) 
+y al mismo tiempo significa 
+‘verter juntos’ (Khéo). 
+‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
+
 Del Egipcio Km, ‘𓆎 ’ o ‘Negro’ 
-              y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
-              forma de referirse a Egipto, 
-              su nombre original, 
-              el 'Lugar de Tierra Negra' “fértil” 
-              por el légamo del Nilo, 
-              en contraste con la tierra roja del desierto.
+y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
+forma de referirse a Egipto, 
+su nombre original, 
+el 'Lugar de Tierra Negra' “fértil” 
+por el légamo del Nilo, 
+en contraste con la tierra roja del desierto.
 
 Del Arábico ‘Al-Kīmiyā' 
-              en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
-              y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
+en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
+y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
 
 En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro 
-              y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
-              
+y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
+
 De la imbricación de la Filosofía griega, la Metalurgia egipcia 
-              y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
-              que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro. 
-              
-              Transformar Negro en Dorado.
+y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
+que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro.
+
+Transformar Negro en Dorado.
 
 La alquimia busca transformar la materia en lo sublime, 
-              busca perfeccionar mediante la fusión experimental, 
-              en última instancia busca el secreto de la inmortalidad 
-              (la búsqueda incesante y fallida de la piedra filosofal 
-              el elemento mágico legendario en la alquimia).
+busca perfeccionar mediante la fusión experimental, 
+en última instancia busca el secreto de la inmortalidad 
+(la búsqueda incesante y fallida de la piedra filosofal 
+el elemento mágico legendario en la alquimia).
 
 Este perfume fue diseñado y creado para tí, luego de sentir distintas esencias elementales
-              y escogiendo un perfil específico que te evoca, floral y anaranjado, 
-              primavera, sol, arena, rubio dorado y dulce. 
-              
-              Tú
+y escogiendo un perfil específico que te evoca, floral y anaranjado, 
+primavera, sol, arena, rubio dorado y dulce.
+
+Tú
 
 Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido, 
-              delante de uno, en un espacio de experimentación creativa, 
-              combinando esencias y elementos con precisión y rigurosidad técnica, 
-              para lograr la evocación deseada. Una experiencia alquímica, 
-              una chispa de química.</div>
+delante de uno, en un espacio de experimentación creativa, 
+combinando esencias y elementos con precisión y rigurosidad técnica, 
+para lograr la evocación deseada. Una experiencia alquímica, 
+una chispa de química.</div>
           </div>
 
           <div class="ticker-track" id="trackB" aria-hidden="true">
             <div class="scroll-text" id="scrollTextB"><strong>QUÍMICA</strong>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
-              ‘Khēmeía’ (χημεία) 
-              que significa ‘fluir’ (Khúma) 
-              y al mismo tiempo significa 
-              ‘verter juntos’ (Khéo). 
-              ‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
-              
+‘Khēmeía’ (χημεία) 
+que significa ‘fluir’ (Khúma) 
+y al mismo tiempo significa 
+‘verter juntos’ (Khéo). 
+‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
+
 Del Egipcio Km, ‘𓆎 ’ o ‘Negro’ 
-              y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
-              forma de referirse a Egipto, 
-              su nombre original, 
-              el 'Lugar de Tierra Negra' “fértil” 
-              por el légamo del Nilo, 
-              en contraste con la tierra roja del desierto.
+y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
+forma de referirse a Egipto, 
+su nombre original, 
+el 'Lugar de Tierra Negra' “fértil” 
+por el légamo del Nilo, 
+en contraste con la tierra roja del desierto.
 
 Del Arábico ‘Al-Kīmiyā' 
-              en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
-              y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
+en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
+y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
 
 En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro 
-              y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
-              
+y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
+
 De la imbricación de la Filosofía griega, la Metalurgia egipcia 
-              y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
-              que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro. 
-              
-              Transformar Negro en Dorado.
+y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
+que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro.
+
+Transformar Negro en Dorado.
 
 La alquimia busca transformar la materia en lo sublime, 
-              busca perfeccionar mediante la fusión experimental, 
-              en última instancia busca el secreto de la inmortalidad 
-              (la búsqueda incesante y fallida de la piedra filosofal 
-              el elemento mágico legendario en la alquimia).
+busca perfeccionar mediante la fusión experimental, 
+en última instancia busca el secreto de la inmortalidad 
+(la búsqueda incesante y fallida de la piedra filosofal 
+el elemento mágico legendario en la alquimia).
 
 Este perfume fue diseñado y creado para tí, luego de sentir distintas esencias elementales
-              y escogiendo un perfil específico que te evoca, floral y anaranjado, 
-              primavera, sol, arena, rubio dorado y dulce. 
-              
-              Tú
+y escogiendo un perfil específico que te evoca, floral y anaranjado, 
+primavera, sol, arena, rubio dorado y dulce.
+
+Tú
 
 Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido, 
-              delante de uno, en un espacio de experimentación creativa, 
-              combinando esencias y elementos con precisión y rigurosidad técnica, 
-              para lograr la evocación deseada. Una experiencia alquímica, 
-              una chispa de química.</div>
+delante de uno, en un espacio de experimentación creativa, 
+combinando esencias y elementos con precisión y rigurosidad técnica, 
+para lograr la evocación deseada. Una experiencia alquímica, 
+una chispa de química.</div>
           </div>
         </div>
 
@@ -292,36 +288,14 @@ Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
 
       <div class="right">
         <div class="video-wrap">
-          <!--
-            Autoplay note:
-            - Browsers generally only allow autoplay if the video is muted.
-            - Google Drive embeds often ignore autoplay requests (Drive may require user interaction).
-            - If you need TRUE autoplay everywhere, use the <video> option below with a direct .mp4 URL.
-          -->
-
-          <!-- Option A: Google Drive preview (may NOT autoplay reliably) -->
+          <!-- YouTube embed (autoplay requires mute on iPhone) -->
           <iframe
-  src="https://www.youtube.com/embed/VIDEO_ID
-    ?autoplay=1
-    &mute=1
-    &playsinline=1
-    &loop=1
-    &playlist=VIDEO_ID
-    &controls=0
-    &modestbranding=1
-    &rel=0"
-  allow="autoplay; fullscreen; picture-in-picture"
-  allowfullscreen
-  title="Fleur d’Oranger video">
-</iframe>
-
-
-          <!-- Option B: Direct MP4 (best for autoplay). Put video.mp4 in the SAME folder and uncomment this, then delete the iframe above. -->
-          <!--
-          <video autoplay muted playsinline loop controls>
-            <source src="video.mp4" type="video/mp4" />
-          </video>
-          -->
+            id="ytPlayer"
+            src="https://www.youtube.com/embed/Xvb52SebfSI?autoplay=1&mute=1&playsinline=1&loop=1&playlist=Xvb52SebfSI&controls=0&modestbranding=1&rel=0"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="Fleur d’Oranger video">
+          </iframe>
         </div>
       </div>
     </section>
@@ -334,23 +308,18 @@ Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
     const ticker = document.getElementById('ticker');
 
     function syncTicker() {
-      // Stop animations while measuring
       trackA.classList.remove('animate');
       trackB.classList.remove('animate');
 
-      // Make sure trackB sits right after trackA
       const contentHeight = trackA.scrollHeight;
       trackA.style.top = '12px';
       trackB.style.top = (12 + contentHeight) + 'px';
 
-      // Scroll distance equals one full content block
       ticker.style.setProperty('--scroll-distance', contentHeight + 'px');
 
-      // Duration: slower for longer text (tweak the divisor to change speed)
-      const duration = Math.max(45, Math.round(contentHeight / 14)); // SCROLL SPEED: larger = slower (seconds) // seconds
+      const duration = Math.max(45, Math.round(contentHeight / 14)); // seconds (bigger = slower)
       ticker.style.setProperty('--duration', duration + 's');
 
-      // Restart animations
       requestAnimationFrame(() => {
         trackA.classList.add('animate');
         trackB.classList.add('animate');
@@ -363,16 +332,11 @@ Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
       window.__tickerTimer = setTimeout(syncTicker, 150);
     });
 
-    // CTA: open Drive video in a new tab
+    // CTA: open YouTube in a new tab
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      const iframe = document.getElementById('drivePlayer');
-      const url = iframe?.getAttribute('src');
-      if (url) window.open(url, '_blank');
+      window.open('https://youtu.be/Xvb52SebfSI', '_blank');
     });
-
-    // Attempt autoplay (Drive may still block). If autoplay is blocked, nothing breaks.
-    // For true autoplay, use the <video autoplay muted playsinline> option.
   </script>
 </body>
 </html>
