@@ -68,12 +68,12 @@
 
     .lede {
       margin: 0;
-      text-align: center;                  /* SUBTITLE ALIGNMENT */
-      color: rgba(255, 172, 28, .92);      /* SUBTITLE COLOR */
+      text-align: center;                   /* SUBTITLE ALIGNMENT */
+      color: rgba(255, 172, 28, .92);       /* SUBTITLE COLOR */
       font-weight: 700;
-      letter-spacing: .12em;               /* SUBTITLE LETTER SPACING */
+      letter-spacing: .12em;                /* SUBTITLE LETTER SPACING */
       text-transform: uppercase;
-      font-size: clamp(20px, 3.8vw, 40px); /* SUBTITLE SIZE */
+      font-size: clamp(20px, 3.8vw, 40px);  /* SUBTITLE SIZE */
     }
 
     /* Auto-scrolling text (vertical ticker) */
@@ -137,8 +137,7 @@
       background: #0a0e16;
     }
 
-    .video-wrap iframe,
-    .video-wrap video {
+    .video-wrap iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -283,16 +282,16 @@ una chispa de química.</div>
           </div>
         </div>
 
-        <a class="cta" href="#" id="cta">Ver video <small>(abrir en pestaña nueva)</small></a>
+        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo)</small></a>
       </div>
 
       <div class="right">
         <div class="video-wrap">
-          <!-- YouTube embed (autoplay requires mute on iPhone) -->
+          <!-- Vimeo embed (autoplay on mobile requires muted=1) -->
           <iframe
-            id="ytPlayer"
-            src="https://www.youtube.com/embed/Xvb52SebfSI?autoplay=1&mute=1&playsinline=1&loop=1&playlist=Xvb52SebfSI&controls=0&modestbranding=1&rel=0"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            id="vimeoPlayer"
+            src="https://player.vimeo.com/video/1149054003?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
+            allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen
             title="Fleur d’Oranger video">
           </iframe>
@@ -332,10 +331,10 @@ una chispa de química.</div>
       window.__tickerTimer = setTimeout(syncTicker, 150);
     });
 
-    // CTA: open YouTube in a new tab
+    // CTA: open Vimeo page in a new tab
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('https://youtu.be/Xvb52SebfSI', '_blank');
+      window.open('https://vimeo.com/1149054003', '_blank');
     });
   </script>
 </body>
