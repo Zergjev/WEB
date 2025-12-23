@@ -4,32 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fleur d’Oranger</title>
+
   <style>
+    /* =========================
+       EASY EDIT CONTROLS (CSS)
+       Change these to tune the look fast
+       ========================= */
     :root {
       --bg: #0b0f19;        /* Background color of the landing */
       --fg: #e8edf7;        /* Main text color */
       --muted: #94a3b8;     /* Secondary / muted text */
-      --title: #FFC000;     /* Title color: Fleur d'Oranger */
+      --title: #FFC000;     /* Title color: Fleur d'Oranger (gold) */
       --accent: #FFAC1C;    /* Accent color: borders, highlights */
     }
 
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
+
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--fg);
-      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%);
+      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%); /* Background gradient */
       line-height: 1.55;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 16px; /* Outer padding around the card (mobile safe area feel) */
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
 
     .card {
-      width: min(100%, 980px);
+      width: min(100%, 980px); /* Max page width on desktop */
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       border-radius: 20px;
@@ -41,19 +47,20 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1fr; /* mobile-first */
+      grid-template-columns: 1fr; /* Mobile-first: stacked */
       gap: 0;
       align-items: stretch;
     }
+
     @media (min-width: 900px) {
-      .hero { grid-template-columns: 1.2fr 1fr; }
+      .hero { grid-template-columns: 1.2fr 1fr; } /* Desktop: text left, video right */
     }
 
     .left {
       padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 14px; /* Spacing between title, subtitle, ticker, button */
     }
 
     h1 {
@@ -61,7 +68,7 @@
       font-size: clamp(30px, 5.2vw, 52px); /* TITLE SIZE: min, fluid, max */
       line-height: 1.08;                   /* TITLE LINE HEIGHT */
       text-align: center;                  /* TITLE ALIGNMENT */
-      color: var(--title);
+      color: var(--title);                 /* TITLE COLOR */
       letter-spacing: .2px;
       text-shadow: 0 8px 30px rgba(255, 172, 28, .18);
     }
@@ -69,62 +76,29 @@
     .lede {
       margin: 0;
       text-align: center;                   /* SUBTITLE ALIGNMENT */
-      color: rgba(255, 172, 28, .92);       /* SUBTITLE COLOR */
+      color: rgba(255, 172, 28, .92);       /* SUBTITLE COLOR (accent) */
       font-weight: 700;
       letter-spacing: .12em;                /* SUBTITLE LETTER SPACING */
       text-transform: uppercase;
       font-size: clamp(20px, 3.8vw, 40px);  /* SUBTITLE SIZE */
     }
 
-    /* Auto-scrolling text (vertical ticker) */
+    /* =========================
+       TICKER (Auto-scrolling text)
+       ========================= */
+
     .ticker {
-      height: 280px; /* TICKER HEIGHT (visible window) */
+      height: 280px; /* TICKER HEIGHT (visible window). Increase for more visible text */
       overflow: hidden;
       position: relative;
-      border: 1px solid rgba(255, 172, 28, .45); /* TICKER BORDER COLOR */
-      border-radius: 14px;                      /* TICKER ROUNDED CORNERS */
-      padding: 12px 14px;                       /* INNER PADDING */
-      background: rgba(0,0,0,.12);              /* TICKER BACKGROUND */
+      border: 1px solid rgba(255, 172, 28, .45); /* Border color (accent) */
+      border-radius: 14px;                      /* Rounded corners */
+      padding: 12px 14px;                       /* Inner padding */
+      background: rgba(0,0,0,.12);              /* Ticker background */
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
     }
 
-    .ticker-track {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      top: 12px;
-      will-change: transform;
-    }
-
-    .ticker-track.animate {
-      animation-name: scrollUp;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-duration: var(--duration, 40s);
-    }
-
-    @keyframes scrollUp {
-      from { transform: translateY(0); }
-      to   { transform: translateY(calc(-1 * var(--scroll-distance, 400px))); }
-    }
-
-    .scroll-text {
-      font-size: clamp(17px, 3.8vw, 20px); /* SCROLL TEXT SIZE */
-      line-height: 1.7;                    /* prevents overlap */
-      letter-spacing: .01em;
-      color: rgba(232, 237, 247, .95);
-      white-space: pre-line;               /* respects new lines */
-    }
-
-    /* NEW: lead-in blank space before the first line appears.
-       Increase height = longer delay; decrease = shorter delay. */
-    .scroll-spacer {
-      height: 200px; /* LEAD-IN BLANK SPACE (tune this) */
-    }
-
-    .scroll-text b,
-    .scroll-text strong { color: rgba(255, 192, 0, .98); }
-
+    /* Decorative line at the top of ticker */
     .ticker:before {
       content: "";
       position: absolute;
@@ -134,13 +108,64 @@
       background: linear-gradient(90deg, transparent, rgba(255,172,28,.55), transparent);
     }
 
+    .ticker-track {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 12px;
+      will-change: transform; /* performance hint */
+    }
+
+    .ticker-track.animate {
+      animation-name: scrollUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-duration: var(--duration, 40s); /* Speed controlled by JS */
+    }
+
+    @keyframes scrollUp {
+      from { transform: translateY(0); }
+      to   { transform: translateY(calc(-1 * var(--scroll-distance, 400px))); }
+    }
+
+    .scroll-text {
+      font-size: clamp(17px, 3.8vw, 20px); /* SCROLL BODY TEXT SIZE */
+      line-height: 1.7;                    /* LINE HEIGHT (prevents overlap) */
+      letter-spacing: .01em;
+      color: rgba(232, 237, 247, .95);
+      white-space: pre-line;               /* Respects line breaks */
+      text-align: left;                    /* BODY TEXT ALIGNMENT (keep left) */
+    }
+
+    /* BLANK LEAD-IN SPACE BEFORE TITLE:
+       Increase height = longer delay before the title appears.
+       Decrease height = shorter delay. */
+    .scroll-spacer {
+      height: 110px; /* LEAD-IN BLANK SPACE (delay) */
+    }
+
+    /* SCROLL TITLE (only the first line) */
+    .scroll-title {
+      text-align: center;              /* CENTER ONLY THIS TITLE LINE */
+      font-weight: 800;
+      letter-spacing: .22em;           /* Make it feel like a heading */
+      color: var(--title);             /* Same gold as main title */
+      margin-bottom: 22px;             /* Space before body text starts */
+      font-size: clamp(18px, 4vw, 22px); /* TITLE SIZE INSIDE TICKER */
+    }
+
+    /* =========================
+       VIDEO (Vimeo)
+       ========================= */
+
     .right { position: relative; }
 
     .video-wrap {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 */
-      background: #0a0e16;
+      padding-top: 56.25%; /* 16:9 aspect ratio.
+                              If your video is vertical, tell me and we can change this. */
+      background: #0a0e16; /* Background behind the video while it loads */
     }
 
     .video-wrap iframe {
@@ -152,32 +177,38 @@
     }
 
     @media (min-width: 900px) {
-      .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); }
+      .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); } /* Accent divider on desktop */
     }
 
+    /* =========================
+       BUTTON
+       ========================= */
     .cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       padding: 14px 16px;
-      background: rgba(255, 172, 28, .16);
+      background: rgba(255, 172, 28, .16); /* Button fill */
       color: var(--fg);
-      border: 1px solid rgba(255, 172, 28, .55);
+      border: 1px solid rgba(255, 172, 28, .55); /* Button border */
       border-radius: 14px;
       font-weight: 700;
       text-decoration: none;
       width: 100%;
       box-shadow: 0 10px 26px rgba(255, 172, 28, .10);
     }
+
     .cta small { opacity: .9; font-weight: 600; }
 
+    /* Small phones */
     @media (max-width: 360px) {
-      .ticker { height: 240px; }
-      .scroll-spacer { height: 90px; } /* slightly shorter on tiny phones */
+      .ticker { height: 240px; }      /* Smaller visible area */
+      .scroll-spacer { height: 90px; }/* Shorter delay on very small screens */
     }
   </style>
 </head>
+
 <body>
   <main class="card" role="main">
     <header></header>
@@ -188,119 +219,126 @@
         <p class="lede">*QUÍMICA</p>
 
         <div class="ticker" id="ticker" aria-label="Texto en desplazamiento automático">
+          <!-- We render two copies of the same text for a continuous loop -->
           <div class="ticker-track" id="trackA">
             <div class="scroll-text" id="scrollTextA">
-              <div class="scroll-spacer"></div>
-              <strong>QUÍMICA</strong>
+              <div class="scroll-spacer"></div> <!-- Delay before text starts -->
+              <div class="scroll-title">QUÍMICA</div> <!-- Centered title (only this line) -->
 
-Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
-‘Khēmeía’ (χημεία) 
-que significa ‘fluir’ (Khúma) 
-y al mismo tiempo significa 
-‘verter juntos’ (Khéo). 
+Proviene del Latín ‘alchymia’ que a su vez proviene del Griego
+‘Khēmeía’ (χημεία)
+que significa ‘fluir’ (Khúma)
+y al mismo tiempo significa
+‘verter juntos’ (Khéo).
 ‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
 
-Del Egipcio Km, ‘𓆎 ’ o ‘Negro’ 
-y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
-forma de referirse a Egipto, 
-su nombre original, 
-el 'Lugar de Tierra Negra' “fértil” 
-por el légamo del Nilo, 
+Del Egipcio Km, ‘𓆎 ’ o ‘Negro’
+y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’,
+forma de referirse a Egipto,
+su nombre original,
+el 'Lugar de Tierra Negra' “fértil”
+por el légamo del Nilo,
 en contraste con la tierra roja del desierto.
 
-Del Arábico ‘Al-Kīmiyā' 
-en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
+Del Arábico ‘Al-Kīmiyā'
+en que ‘al’ es el prefijo determinante ‘la’ o ‘el’
 y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
 
-En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro 
+En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro
 y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
 
-De la imbricación de la Filosofía griega, la Metalurgia egipcia 
+De la imbricación de la Filosofía griega, la Metalurgia egipcia
 y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
 que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro.
 
 Transformar Negro en Dorado.
 
-La alquimia busca transformar la materia en lo sublime, 
-busca perfeccionar mediante la fusión experimental, 
-en última instancia busca el secreto de la inmortalidad 
-(la búsqueda incesante y fallida de la piedra filosofal 
+La alquimia busca transformar la materia en lo sublime,
+busca perfeccionar mediante la fusión experimental,
+en última instancia busca el secreto de la inmortalidad
+(la búsqueda incesante y fallida de la piedra filosofal
 el elemento mágico legendario en la alquimia).
 
 Este perfume fue diseñado y creado para tí, luego de sentir distintas esencias elementales
-y escogiendo un perfil específico que te evoca, floral y anaranjado, 
+y escogiendo un perfil específico que te evoca, floral y anaranjado,
 primavera, sol, arena, rubio dorado y dulce.
 
 Tú
 
-Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido, 
-delante de uno, en un espacio de experimentación creativa, 
-combinando esencias y elementos con precisión y rigurosidad técnica, 
-para lograr la evocación deseada. Una experiencia alquímica, 
+Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
+delante de uno, en un espacio de experimentación creativa,
+combinando esencias y elementos con precisión y rigurosidad técnica,
+para lograr la evocación deseada. Una experiencia alquímica,
 una chispa de química.
             </div>
           </div>
 
           <div class="ticker-track" id="trackB" aria-hidden="true">
             <div class="scroll-text" id="scrollTextB">
-              <div class="scroll-spacer"></div>
-              <strong>QUÍMICA</strong>
+              <div class="scroll-spacer"></div> <!-- Delay before text starts -->
+              <div class="scroll-title">QUÍMICA</div> <!-- Centered title (only this line) -->
 
-Proviene del Latín ‘alchymia’ que a su vez proviene del Griego 
-‘Khēmeía’ (χημεία) 
-que significa ‘fluir’ (Khúma) 
-y al mismo tiempo significa 
-‘verter juntos’ (Khéo). 
+Proviene del Latín ‘alchymia’ que a su vez proviene del Griego
+‘Khēmeía’ (χημεία)
+que significa ‘fluir’ (Khúma)
+y al mismo tiempo significa
+‘verter juntos’ (Khéo).
 ‘Khēmeía’ significa ‘fundir metales’, crear nuevas aleaciones.
 
-Del Egipcio Km, ‘𓆎 ’ o ‘Negro’ 
-y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’, 
-forma de referirse a Egipto, 
-su nombre original, 
-el 'Lugar de Tierra Negra' “fértil” 
-por el légamo del Nilo, 
+Del Egipcio Km, ‘𓆎 ’ o ‘Negro’
+y que da origen a Khem ‘𓆎𓅓𓏏𓊖’ o ‘Tierra Negra’,
+forma de referirse a Egipto,
+su nombre original,
+el 'Lugar de Tierra Negra' “fértil”
+por el légamo del Nilo,
 en contraste con la tierra roja del desierto.
 
-Del Arábico ‘Al-Kīmiyā' 
-en que ‘al’ es el prefijo determinante ‘la’ o ‘el’ 
+Del Arábico ‘Al-Kīmiyā'
+en que ‘al’ es el prefijo determinante ‘la’ o ‘el’
 y ‘Kīmiyā' es ‘Ciencia de Transmutación de los Metales’.
 
-En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro 
+En 330 AC cuando Alejandro Magno funda Alejandría, ésta se convierte en el punto de encuentro
 y fusión de las civilizaciones Griega y Egipcia, y posteriormente absorbe las influencias Árabe y Romana.
 
-De la imbricación de la Filosofía griega, la Metalurgia egipcia 
+De la imbricación de la Filosofía griega, la Metalurgia egipcia
 y la Metafísica árabe, surge ‘alchymia’, la primera ciencia/arte
 que busca transformar la materia corriente, la Tierra Negra, el metal común, oscuro y opaco como el plomo, en el metal perfecto, el Oro.
 
 Transformar Negro en Dorado.
 
-La alquimia busca transformar la materia en lo sublime, 
-busca perfeccionar mediante la fusión experimental, 
-en última instancia busca el secreto de la inmortalidad 
-(la búsqueda incesante y fallida de la piedra filosofal 
+La alquimia busca transformar la materia en lo sublime,
+busca perfeccionar mediante la fusión experimental,
+en última instancia busca el secreto de la inmortalidad
+(la búsqueda incesante y fallida de la piedra filosofal
 el elemento mágico legendario en la alquimia).
 
 Este perfume fue diseñado y creado para tí, luego de sentir distintas esencias elementales
-y escogiendo un perfil específico que te evoca, floral y anaranjado, 
+y escogiendo un perfil específico que te evoca, floral y anaranjado,
 primavera, sol, arena, rubio dorado y dulce.
 
 Tú
 
-Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido, 
-delante de uno, en un espacio de experimentación creativa, 
-combinando esencias y elementos con precisión y rigurosidad técnica, 
-para lograr la evocación deseada. Una experiencia alquímica, 
+Le Labo (Laboratorio) es un espacio donde el perfume es fabricado a pedido,
+delante de uno, en un espacio de experimentación creativa,
+combinando esencias y elementos con precisión y rigurosidad técnica,
+para lograr la evocación deseada. Una experiencia alquímica,
 una chispa de química.
             </div>
           </div>
         </div>
 
-        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo)</small></a>
+        <a class="cta" href="#" id="cta">
+          Ver video <small>(abrir en Vimeo)</small>
+        </a>
       </div>
 
       <div class="right">
         <div class="video-wrap">
-          <!-- Vimeo embed (autoplay on mobile requires muted=1) -->
+          <!-- VIMEO EMBED:
+               - autoplay=1 starts automatically
+               - muted=1 is REQUIRED for autoplay on mobile (iPhone)
+               - loop=1 repeats the video
+               - title/byline/portrait/controls = 0 hides UI for a cleaner look -->
           <iframe
             id="vimeoPlayer"
             src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
@@ -314,24 +352,41 @@ una chispa de química.
   </main>
 
   <script>
+    // =========================
+    // EASY EDIT CONTROLS (JS)
+    // =========================
+
+    // TICKER SPEED:
+    // The code below auto-calculates duration based on text length.
+    // If you want manual control, replace "duration" with a fixed number (e.g., 80).
+    // Example: const duration = 80;  // seconds
+    //
+    // LEAD-IN DELAY:
+    // Controlled in CSS via .scroll-spacer height.
+
     // ------- Ticker autoscroll (seamless loop, no overlaps) -------
     const trackA = document.getElementById('trackA');
     const trackB = document.getElementById('trackB');
     const ticker = document.getElementById('ticker');
 
     function syncTicker() {
+      // Stop animations while measuring
       trackA.classList.remove('animate');
       trackB.classList.remove('animate');
 
+      // Make sure trackB sits right after trackA
       const contentHeight = trackA.scrollHeight;
       trackA.style.top = '12px';
       trackB.style.top = (12 + contentHeight) + 'px';
 
+      // Scroll distance equals one full content block
       ticker.style.setProperty('--scroll-distance', contentHeight + 'px');
 
-      const duration = Math.max(45, Math.round(contentHeight / 14)); // seconds (bigger = slower)
+      // Duration: larger = slower (seconds)
+      const duration = Math.max(45, Math.round(contentHeight / 14)); /* SCROLL SPEED CONTROL */
       ticker.style.setProperty('--duration', duration + 's');
 
+      // Restart animations
       requestAnimationFrame(() => {
         trackA.classList.add('animate');
         trackB.classList.add('animate');
@@ -347,8 +402,9 @@ una chispa de química.
     // CTA: open Vimeo page in a new tab
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('https://vimeo.com/1149058259', '_blank');
+      window.open('https://vimeo.com/1149058259', '_blank'); /* VIMEO PAGE LINK */
     });
   </script>
 </body>
 </html>
+
