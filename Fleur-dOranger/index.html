@@ -1,4 +1,4 @@
-éril<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -6,15 +6,11 @@
   <title>Fleur d’Oranger</title>
 
   <style>
-    /* =========================
-       EASY EDIT CONTROLS (CSS)
-       Change these to tune the look fast
-       ========================= */
     :root {
       --bg: #0b0f19;        /* Background color of the landing */
       --fg: #e8edf7;        /* Main text color */
       --muted: #94a3b8;     /* Secondary / muted text */
-      --title: #FFC000;     /* Title color: Fleur d'Oranger (gold) */
+      --title: #FFC000;     /* Title color: Fleur d'Oranger */
       --accent: #FFAC1C;    /* Accent color: borders, highlights */
     }
 
@@ -24,18 +20,18 @@
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--fg);
-      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%); /* Background gradient */
+      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%); /* Background */
       line-height: 1.55;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px; /* Outer padding around the card (mobile safe area feel) */
+      padding: 16px; /* Outer padding */
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
 
     .card {
-      width: min(100%, 980px); /* Max page width on desktop */
+      width: min(100%, 980px); /* Max width (desktop) */
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       border-radius: 20px;
@@ -47,27 +43,26 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1fr; /* Mobile-first: stacked */
+      grid-template-columns: 1fr; /* Mobile-first */
       gap: 0;
       align-items: stretch;
     }
-
     @media (min-width: 900px) {
-      .hero { grid-template-columns: 1.2fr 1fr; } /* Desktop: text left, video right */
+      .hero { grid-template-columns: 1.2fr 1fr; } /* Desktop layout */
     }
 
     .left {
       padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px; /* Spacing between title, subtitle, ticker, button */
+      gap: 14px;
     }
 
     h1 {
       margin: 6px 0 0;
-      font-size: clamp(30px, 5.2vw, 52px); /* TITLE SIZE: min, fluid, max */
+      font-size: clamp(30px, 5.2vw, 52px); /* TITLE SIZE */
       line-height: 1.08;                   /* TITLE LINE HEIGHT */
-      text-align: center;                  /* TITLE ALIGNMENT */
+      text-align: center;                  /* TITLE ALIGN */
       color: var(--title);                 /* TITLE COLOR */
       letter-spacing: .2px;
       text-shadow: 0 8px 30px rgba(255, 172, 28, .18);
@@ -75,30 +70,27 @@
 
     .lede {
       margin: 0;
-      text-align: center;                   /* SUBTITLE ALIGNMENT */
-      color: rgba(255, 172, 28, .92);       /* SUBTITLE COLOR (accent) */
+      text-align: center;                  /* SUBTITLE ALIGN */
+      color: rgba(255, 172, 28, .92);      /* SUBTITLE COLOR */
       font-weight: 700;
-      letter-spacing: .12em;                /* SUBTITLE LETTER SPACING */
+      letter-spacing: .12em;               /* SUBTITLE LETTER SPACING */
       text-transform: uppercase;
-      font-size: clamp(20px, 3.8vw, 40px);  /* SUBTITLE SIZE */
+      font-size: clamp(20px, 3.8vw, 40px); /* SUBTITLE SIZE */
     }
 
-    /* =========================
-       TICKER (Auto-scrolling text)
-       ========================= */
+    /* -------- TICKER -------- */
 
     .ticker {
-      height: 280px; /* TICKER HEIGHT (visible window). Increase for more visible text */
+      height: 280px; /* TICKER HEIGHT */
       overflow: hidden;
       position: relative;
-      border: 1px solid rgba(255, 172, 28, .45); /* Border color (accent) */
-      border-radius: 14px;                      /* Rounded corners */
-      padding: 12px 14px;                       /* Inner padding */
-      background: rgba(0,0,0,.12);              /* Ticker background */
+      border: 1px solid rgba(255, 172, 28, .45); /* Border accent */
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(0,0,0,.12);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
     }
 
-    /* Decorative line at the top of ticker */
     .ticker:before {
       content: "";
       position: absolute;
@@ -113,14 +105,14 @@
       left: 14px;
       right: 14px;
       top: 12px;
-      will-change: transform; /* performance hint */
+      will-change: transform;
     }
 
     .ticker-track.animate {
       animation-name: scrollUp;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
-      animation-duration: var(--duration, 40s); /* Speed controlled by JS */
+      animation-duration: var(--duration, 40s); /* Speed controlled in JS */
     }
 
     @keyframes scrollUp {
@@ -130,42 +122,35 @@
 
     .scroll-text {
       font-size: clamp(17px, 3.8vw, 20px); /* SCROLL BODY TEXT SIZE */
-      line-height: 1.7;                    /* LINE HEIGHT (prevents overlap) */
+      line-height: 1.7;                    /* Prevents overlap */
       letter-spacing: .01em;
       color: rgba(232, 237, 247, .95);
-      white-space: pre-line;               /* Respects line breaks */
-      text-align: left;                    /* BODY TEXT ALIGNMENT (keep left) */
+      white-space: pre-line;
+      text-align: left;                    /* BODY stays left */
     }
 
-    /* BLANK LEAD-IN SPACE BEFORE TITLE:
-       Increase height = longer delay before the title appears.
-       Decrease height = shorter delay. */
     .scroll-spacer {
-      height: 170px; /* LEAD-IN BLANK SPACE (delay) */
+      height: 110px; /* LEAD-IN BLANK SPACE (delay) */
     }
 
-    /* SCROLL TITLE (only the first line) */
     .scroll-title {
-      text-align: center;              /* CENTER ONLY THIS TITLE LINE */
+      text-align: center;                  /* Center ONLY title */
       font-weight: 800;
-      letter-spacing: .22em;           /* Make it feel like a heading */
-      color: var(--title);             /* Same gold as main title */
-      margin-bottom: 22px;             /* Space before body text starts */
-      font-size: clamp(18px, 4vw, 22px); /* TITLE SIZE INSIDE TICKER */
+      letter-spacing: .22em;
+      color: var(--title);
+      margin-bottom: 22px;
+      font-size: clamp(18px, 4vw, 22px);
     }
 
-    /* =========================
-       VIDEO (Vimeo)
-       ========================= */
+    /* -------- VIDEO -------- */
 
     .right { position: relative; }
 
     .video-wrap {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 aspect ratio.
-                              If your video is vertical, tell me and we can change this. */
-      background: #0a0e16; /* Background behind the video while it loads */
+      padding-top: 56.25%; /* Aspect ratio 16:9 (change if needed) */
+      background: #0a0e16;
     }
 
     .video-wrap iframe {
@@ -177,34 +162,31 @@
     }
 
     @media (min-width: 900px) {
-      .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); } /* Accent divider on desktop */
+      .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); }
     }
 
-    /* =========================
-       BUTTON
-       ========================= */
+    /* -------- CTA BUTTON -------- */
+
     .cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       padding: 14px 16px;
-      background: rgba(255, 172, 28, .16); /* Button fill */
+      background: rgba(255, 172, 28, .16);
       color: var(--fg);
-      border: 1px solid rgba(255, 172, 28, .55); /* Button border */
+      border: 1px solid rgba(255, 172, 28, .55);
       border-radius: 14px;
       font-weight: 700;
       text-decoration: none;
       width: 100%;
       box-shadow: 0 10px 26px rgba(255, 172, 28, .10);
     }
-
     .cta small { opacity: .9; font-weight: 600; }
 
-    /* Small phones */
     @media (max-width: 360px) {
-      .ticker { height: 240px; }      /* Smaller visible area */
-      .scroll-spacer { height: 90px; }/* Shorter delay on very small screens */
+      .ticker { height: 240px; }
+      .scroll-spacer { height: 90px; }
     }
   </style>
 </head>
@@ -219,11 +201,10 @@
         <p class="lede">*QUÍMICA</p>
 
         <div class="ticker" id="ticker" aria-label="Texto en desplazamiento automático">
-          <!-- We render two copies of the same text for a continuous loop -->
           <div class="ticker-track" id="trackA">
             <div class="scroll-text" id="scrollTextA">
-              <div class="scroll-spacer"></div> <!-- Delay before text starts -->
-              <div class="scroll-title">QUÍMICA</div> <!-- Centered title (only this line) -->
+              <div class="scroll-spacer"></div>
+              <div class="scroll-title">QUÍMICA</div>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego
 ‘Khēmeía’ (χημεία)
@@ -238,7 +219,7 @@ forma de referirse a Egipto,
 su nombre original,
 el 'Lugar de Tierra Negra' “fértil”
 por el légamo del Nilo,
-en contraste con la tierra roja y estéril del desierto.
+en contraste con la tierra roja del desierto.
 
 Del Arábico ‘Al-Kīmiyā'
 en que ‘al’ es el prefijo determinante ‘la’ o ‘el’
@@ -275,8 +256,8 @@ una chispa de química.
 
           <div class="ticker-track" id="trackB" aria-hidden="true">
             <div class="scroll-text" id="scrollTextB">
-              <div class="scroll-spacer"></div> <!-- Delay before text starts -->
-              <div class="scroll-title">QUÍMICA</div> <!-- Centered title (only this line) -->
+              <div class="scroll-spacer"></div>
+              <div class="scroll-title">QUÍMICA</div>
 
 Proviene del Latín ‘alchymia’ que a su vez proviene del Griego
 ‘Khēmeía’ (χημεία)
@@ -291,7 +272,7 @@ forma de referirse a Egipto,
 su nombre original,
 el 'Lugar de Tierra Negra' “fértil”
 por el légamo del Nilo,
-en contraste con la tierra roja y estéril del desierto.
+en contraste con la tierra roja del desierto.
 
 Del Arábico ‘Al-Kīmiyā'
 en que ‘al’ es el prefijo determinante ‘la’ o ‘el’
@@ -327,24 +308,26 @@ una chispa de química.
           </div>
         </div>
 
-        <a class="cta" href="#" id="cta">
-          Ver video <small>(abrir en Vimeo)</small>
-        </a>
+        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo con sonido)</small></a>
       </div>
 
       <div class="right">
         <div class="video-wrap">
-          <!-- VIMEO EMBED:
-               - autoplay=1 starts automatically
-               - muted=1 is REQUIRED for autoplay on mobile (iPhone)
-               - loop=1 repeats the video
-               - title/byline/portrait/controls = 0 hides UI for a cleaner look -->
+          <!-- VIMEO EMBED (mobile-friendly autoplay):
+               KEY PARAMS:
+               - autoplay=1  : try to start immediately
+               - muted=1     : REQUIRED for autoplay on iPhone/Safari
+               - loop=1      : loops
+               - background=1: cleaner autoplay behavior (no UI, behaves like a background video)
+               - autopause=0 : prevents Vimeo pausing it when it thinks it lost focus
+               If you want UI controls later, remove background=1 and set controls=1 (requires plan/settings). -->
           <iframe
             id="vimeoPlayer"
-            src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
-            allow="autoplay; fullscreen; picture-in-picture"
+            src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&background=1&autopause=0&badge=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
-            title="Fleur d’Oranger video">
+            title="Fleur_2">
           </iframe>
         </div>
       </div>
@@ -352,41 +335,24 @@ una chispa de química.
   </main>
 
   <script>
-    // =========================
-    // EASY EDIT CONTROLS (JS)
-    // =========================
-
-    // TICKER SPEED:
-    // The code below auto-calculates duration based on text length.
-    // If you want manual control, replace "duration" with a fixed number (e.g., 80).
-    // Example: const duration = 80;  // seconds
-    //
-    // LEAD-IN DELAY:
-    // Controlled in CSS via .scroll-spacer height.
-
     // ------- Ticker autoscroll (seamless loop, no overlaps) -------
     const trackA = document.getElementById('trackA');
     const trackB = document.getElementById('trackB');
     const ticker = document.getElementById('ticker');
 
     function syncTicker() {
-      // Stop animations while measuring
       trackA.classList.remove('animate');
       trackB.classList.remove('animate');
 
-      // Make sure trackB sits right after trackA
       const contentHeight = trackA.scrollHeight;
       trackA.style.top = '12px';
       trackB.style.top = (12 + contentHeight) + 'px';
 
-      // Scroll distance equals one full content block
       ticker.style.setProperty('--scroll-distance', contentHeight + 'px');
 
-      // Duration: larger = slower (seconds)
-      const duration = Math.max(45, Math.round(contentHeight / 14)); /* SCROLL SPEED CONTROL */
+      const duration = Math.max(45, Math.round(contentHeight / 14)); // seconds (bigger = slower)
       ticker.style.setProperty('--duration', duration + 's');
 
-      // Restart animations
       requestAnimationFrame(() => {
         trackA.classList.add('animate');
         trackB.classList.add('animate');
@@ -399,12 +365,17 @@ una chispa de química.
       window.__tickerTimer = setTimeout(syncTicker, 150);
     });
 
-    // CTA: open Vimeo page in a new tab
+    // CTA: open Vimeo page (this is where users can unmute / play with sound)
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('https://vimeo.com/1149058259', '_blank'); /* VIMEO PAGE LINK */
+      window.open('https://vimeo.com/1149058259', '_blank');
     });
   </script>
+
+  <!-- OPTIONAL:
+       Vimeo Player API. Only needed if later you want to add play/pause buttons, etc.
+       Keeping it here does not hurt. -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
 
