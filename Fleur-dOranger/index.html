@@ -12,6 +12,13 @@
       --muted: #94a3b8;     /* Secondary / muted text */
       --title: #FFC000;     /* Title color: Fleur d'Oranger */
       --accent: #FFAC1C;    /* Accent color: borders, highlights */
+
+      /* ===== Overlay button controls (easy edit) ===== */
+      --overlay-btn-size: 40px;      /* Button diameter (smaller/larger) */
+      --overlay-gap: 10px;           /* Space between buttons */
+      --overlay-pad: 10px;           /* Distance from video edges */
+      --overlay-bg: rgba(0,0,0,.55); /* Button background */
+      --overlay-border: rgba(255, 172, 28, .65); /* Button border color */
     }
 
     * { box-sizing: border-box; }
@@ -20,18 +27,18 @@
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--fg);
-      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%); /* Background */
+      background: radial-gradient(1200px 800px at 10% -10%, #1a2333 0%, var(--bg) 60%);
       line-height: 1.55;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px; /* Outer padding */
+      padding: 16px;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
 
     .card {
-      width: min(100%, 980px); /* Max width (desktop) */
+      width: min(100%, 980px);
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       border-radius: 20px;
@@ -43,15 +50,13 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1fr; /* Mobile-first */
+      grid-template-columns: 1fr; /* stacked */
       gap: 0;
       align-items: stretch;
     }
 
-    /* Desktop layout:
-       Keeping stacked full-width, same as mobile (your preference). */
     @media (min-width: 900px) {
-      .hero { grid-template-columns: 1fr; } /* FULL WIDTH: keep stacked layout on desktop too */
+      .hero { grid-template-columns: 1fr; } /* keep stacked on desktop too */
     }
 
     .left {
@@ -63,31 +68,31 @@
 
     h1 {
       margin: 6px 0 0;
-      font-size: clamp(30px, 5.2vw, 52px); /* TITLE SIZE */
-      line-height: 1.08;                   /* TITLE LINE HEIGHT */
-      text-align: center;                  /* TITLE ALIGN */
-      color: var(--title);                 /* TITLE COLOR */
+      font-size: clamp(30px, 5.2vw, 52px);
+      line-height: 1.08;
+      text-align: center;
+      color: var(--title);
       letter-spacing: .2px;
       text-shadow: 0 8px 30px rgba(255, 172, 28, .18);
     }
 
     .lede {
       margin: 0;
-      text-align: center;                  /* SUBTITLE ALIGN */
-      color: rgba(255, 172, 28, .92);      /* SUBTITLE COLOR */
+      text-align: center;
+      color: rgba(255, 172, 28, .92);
       font-weight: 700;
-      letter-spacing: .12em;               /* SUBTITLE LETTER SPACING */
+      letter-spacing: .12em;
       text-transform: uppercase;
-      font-size: clamp(20px, 3.8vw, 40px); /* SUBTITLE SIZE */
+      font-size: clamp(20px, 3.8vw, 40px);
     }
 
     /* -------- TICKER -------- */
 
     .ticker {
-      height: 280px; /* TICKER HEIGHT */
+      height: 280px;
       overflow: hidden;
       position: relative;
-      border: 1px solid rgba(255, 172, 28, .45); /* Border accent */
+      border: 1px solid rgba(255, 172, 28, .45);
       border-radius: 14px;
       padding: 12px 14px;
       background: rgba(0,0,0,.12);
@@ -115,7 +120,7 @@
       animation-name: scrollUp;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
-      animation-duration: var(--duration, 40s); /* Speed controlled in JS */
+      animation-duration: var(--duration, 40s);
     }
 
     @keyframes scrollUp {
@@ -124,20 +129,17 @@
     }
 
     .scroll-text {
-      font-size: clamp(17px, 3.8vw, 20px); /* SCROLL BODY TEXT SIZE */
-      line-height: 1.7;                    /* Prevents overlap */
+      font-size: clamp(17px, 3.8vw, 20px);
+      line-height: 1.7;
       letter-spacing: .01em;
       color: rgba(232, 237, 247, .95);
       white-space: pre-line;
-      text-align: left;                    /* BODY stays left */
+      text-align: left;
     }
 
-    .scroll-spacer {
-      height: 110px; /* LEAD-IN BLANK SPACE (delay) */
-    }
-
+    .scroll-spacer { height: 110px; }
     .scroll-title {
-      text-align: center;                  /* Center ONLY title */
+      text-align: center;
       font-weight: 800;
       letter-spacing: .22em;
       color: var(--title);
@@ -147,15 +149,15 @@
 
     /* -------- VIDEO -------- */
 
-    .right { position: relative; }
+    .right { padding: 0 18px 18px; }
 
     .video-wrap {
       position: relative;
       width: 100%;
-      padding-top: 70%; /* VIDEO WINDOW HEIGHT: bigger = taller video presence */
+      padding-top: 70%; /* Video window height */
       background: #0a0e16;
-      border-radius: 14px; /* Matches your ticker rounding for a nicer look */
-      overflow: hidden;     /* Keeps iframe corners clean */
+      border-radius: 14px;
+      overflow: hidden;
     }
 
     .video-wrap iframe {
@@ -166,41 +168,62 @@
       border: 0;
     }
 
-    /* Since layout is stacked even on desktop, we don't need a left border divider.
-       If you later return to side-by-side layout, you can restore the divider. */
-    /* @media (min-width: 900px) {
-      .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); }
-    } */
+    /* ===== Overlay Controls ON TOP of the video ===== */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
 
-    /* -------- CTA BUTTONS -------- */
+    .overlay-controls {
+      position: absolute;
+      right: var(--overlay-pad);
+      bottom: var(--overlay-pad);
+      display: flex;
+      gap: var(--overlay-gap);
+      pointer-events: auto;
+      align-items: center;
+    }
 
-    .cta {
+    .overlay-btn {
+      width: var(--overlay-btn-size);
+      height: var(--overlay-btn-size);
+      border-radius: 999px;
+      border: 1px solid var(--overlay-border);
+      background: var(--overlay-bg);
+      color: var(--fg);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 14px 16px;
-      background: rgba(255, 172, 28, .16);
-      color: var(--fg);
-      border: 1px solid rgba(255, 172, 28, .55);
-      border-radius: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      width: 100%;
-      box-shadow: 0 10px 26px rgba(255, 172, 28, .10);
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+      backdrop-filter: blur(6px);
     }
-    .cta small { opacity: .9; font-weight: 600; }
 
-    /* NEW: a slightly stronger button style for the sound action (optional) */
-    .cta.cta-sound {
-      background: rgba(255, 192, 0, .22);         /* SOUND BUTTON BACKGROUND */
-      border-color: rgba(255, 192, 0, .70);       /* SOUND BUTTON BORDER */
+    .overlay-btn:active { transform: scale(.98); }
+
+    .overlay-btn svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    /* OPTIONAL: highlight state when sound is ON */
+    .overlay-btn.is-on {
+      border-color: rgba(255, 192, 0, .90); /* Sound ON border */
+      box-shadow: 0 10px 24px rgba(255, 192, 0, .12);
     }
 
     @media (max-width: 360px) {
       .ticker { height: 240px; }
       .scroll-spacer { height: 90px; }
-      .video-wrap { padding-top: 78%; } /* Slightly taller on very small phones */
+      .video-wrap { padding-top: 78%; }
+      :root {
+        --overlay-btn-size: 36px;
+        --overlay-pad: 8px;
+      }
     }
   </style>
 </head>
@@ -321,21 +344,10 @@ una chispa de química.
             </div>
           </div>
         </div>
-
-        <!-- NEW BUTTON 1: UNMUTE (mobile requires a user tap to enable sound) -->
-        <a class="cta cta-sound" href="#" id="soundBtn">🔊 Activar sonido <small>(tap para escuchar)</small></a>
-
-        <!-- EXISTING BUTTON 2: OPEN ON VIMEO (always lets user control sound/fullscreen there) -->
-        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo)</small></a>
       </div>
 
       <div class="right">
         <div class="video-wrap">
-          <!-- VIMEO EMBED (mobile-friendly autoplay):
-               IMPORTANT:
-               - muted=1 is REQUIRED for autoplay on iPhone/Safari (browser rule)
-               - sound can only be enabled AFTER a user tap (we do that with the button above)
-               - background=1 keeps it clean and autoplay-friendly -->
           <iframe
             id="vimeoPlayer"
             src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&background=1&autopause=0&badge=0&player_id=0&app_id=58479"
@@ -344,6 +356,35 @@ una chispa de química.
             allowfullscreen
             title="Fleur_2">
           </iframe>
+
+          <!-- OVERLAY UI (buttons on top of video) -->
+          <div class="video-overlay" aria-hidden="false">
+            <div class="overlay-controls">
+              <!-- Button 1: Mute/Unmute toggle -->
+              <button class="overlay-btn" id="soundToggleBtn" type="button" aria-label="Activar o desactivar sonido" title="Sonido">
+                <!-- Icon will swap via JS -->
+                <svg id="iconSoundOn" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display:none;">
+                  <path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M15 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M17.5 6.5a7.5 7.5 0 0 1 0 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg id="iconSoundOff" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M22 9 16 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16 9 22 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+
+              <!-- Button 2: Open in Vimeo -->
+              <button class="overlay-btn" id="openVimeoBtn" type="button" aria-label="Abrir en Vimeo" title="Abrir en Vimeo">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M10 14 21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -365,7 +406,7 @@ una chispa de química.
 
       ticker.style.setProperty('--scroll-distance', contentHeight + 'px');
 
-      const duration = Math.max(45, Math.round(contentHeight / 14)); // seconds (bigger = slower)
+      const duration = Math.max(45, Math.round(contentHeight / 14)); // SCROLL SPEED: bigger = slower
       ticker.style.setProperty('--duration', duration + 's');
 
       requestAnimationFrame(() => {
@@ -380,42 +421,62 @@ una chispa de química.
       window.__tickerTimer = setTimeout(syncTicker, 150);
     });
 
-    // ------- VIMEO SOUND CONTROL (UNMUTE) -------
-    // Mobile browsers DO NOT allow autoplay with sound.
-    // Solution: autoplay muted + user taps "Activar sonido" -> unmute + volume + keep playing.
+    // ------- Vimeo mute/unmute TOGGLE -------
+    // Mobile browsers block autoplay with sound. We autoplay muted, then user can toggle sound.
     let vimeoPlayerInstance = null;
 
     function getVimeoPlayer() {
-      // Vimeo.Player is provided by https://player.vimeo.com/api/player.js
       if (!vimeoPlayerInstance && window.Vimeo && window.Vimeo.Player) {
-        const iframe = document.getElementById('vimeoPlayer');
-        vimeoPlayerInstance = new window.Vimeo.Player(iframe);
+        vimeoPlayerInstance = new window.Vimeo.Player(document.getElementById('vimeoPlayer'));
       }
       return vimeoPlayerInstance;
     }
 
-    document.getElementById('soundBtn').addEventListener('click', async (e) => {
-      e.preventDefault();
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const iconSoundOn = document.getElementById('iconSoundOn');
+    const iconSoundOff = document.getElementById('iconSoundOff');
+
+    function setSoundUI(isOn) {
+      // Visual state: border glow + icon
+      soundToggleBtn.classList.toggle('is-on', isOn);              // adds highlight when ON
+      iconSoundOn.style.display = isOn ? 'block' : 'none';         // show speaker waves
+      iconSoundOff.style.display = isOn ? 'none' : 'block';        // show muted icon
+      soundToggleBtn.setAttribute('aria-label', isOn ? 'Silenciar' : 'Activar sonido');
+      soundToggleBtn.title = isOn ? 'Silenciar' : 'Activar sonido';
+    }
+
+    // Initial UI: start muted
+    setSoundUI(false);
+
+    soundToggleBtn.addEventListener('click', async () => {
       const player = getVimeoPlayer();
       if (!player) return;
 
       try {
-        await player.setMuted(false);  // UNMUTE (requires user gesture)
-        await player.setVolume(1);     // VOLUME: 0..1
-        await player.play();           // Ensure it continues playing
+        const currentlyMuted = await player.getMuted(); // true/false
+        const nextMuted = !currentlyMuted;
+
+        await player.setMuted(nextMuted);  // Toggle mute
+
+        // If unmuting, set volume + keep playing
+        if (!nextMuted) {
+          await player.setVolume(1);       // 0..1
+          await player.play();
+        }
+
+        setSoundUI(!nextMuted);            // update UI: isOn = !muted
       } catch (err) {
-        console.log('Could not unmute Vimeo player:', err);
+        console.log('Could not toggle sound:', err);
       }
     });
 
-    // CTA: open Vimeo page (always gives user full sound controls there)
-    document.getElementById('cta').addEventListener('click', (e) => {
-      e.preventDefault();
-      window.open('https://vimeo.com/1149058259', '_blank'); // MUST match the same Vimeo ID as the embed
+    // Overlay button: open on Vimeo (fullscreen + native controls)
+    document.getElementById('openVimeoBtn').addEventListener('click', () => {
+      window.open('https://vimeo.com/1149058259', '_blank'); /* Vimeo page link */
     });
   </script>
 
-  <!-- REQUIRED for the "Activar sonido" button to control Vimeo -->
+  <!-- Required for Vimeo API control (mute/unmute/volume/play) -->
   <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
