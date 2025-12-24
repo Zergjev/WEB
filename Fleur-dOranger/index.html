@@ -13,12 +13,20 @@
       --title: #FFC000;     /* Title color: Fleur d'Oranger */
       --accent: #FFAC1C;    /* Accent color: borders, highlights */
 
-      /* ===== Overlay button controls (easy edit) ===== */
-      --overlay-btn-size: 40px;      /* Button diameter (smaller/larger) */
-      --overlay-gap: 10px;           /* Space between buttons */
-      --overlay-pad: 10px;           /* Distance from video edges */
-      --overlay-bg: rgba(0,0,0,.55); /* Button background */
-      --overlay-border: rgba(255, 172, 28, .65); /* Button border color */
+      /* ===== SCROLLING TEXT (TICKER) CONTROLS ===== */
+      --ticker-height-mobile: 280px; /* TICKER HEIGHT on phones (bigger = more text visible) */
+      --ticker-height-small: 240px;  /* TICKER HEIGHT on very small phones */
+
+      /* ===== VIDEO WINDOW CONTROLS ===== */
+      --video-aspect-mobile: 70%;    /* VIDEO WINDOW HEIGHT on mobile (padding-top). Bigger = taller window */
+      --video-aspect-small: 78%;     /* VIDEO WINDOW HEIGHT on tiny phones */
+
+      /* ===== OVERLAY BUTTON CONTROLS (easy edit) ===== */
+      --overlay-btn-size: 40px;      /* BUTTON SIZE (diameter). Bigger = larger buttons */
+      --overlay-gap: 10px;           /* GAP between stacked buttons */
+      --overlay-pad: 10px;           /* DISTANCE from video edges */
+      --overlay-bg: rgba(0,0,0,.55); /* BUTTON background */
+      --overlay-border: rgba(255, 172, 28, .65); /* BUTTON border color */
     }
 
     * { box-sizing: border-box; }
@@ -38,7 +46,7 @@
     }
 
     .card {
-      width: min(100%, 980px);
+      width: min(100%, 980px); /* Max width (desktop) */
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       border-radius: 20px;
@@ -48,15 +56,17 @@
 
     header { padding: 10px 18px 0; }
 
+    /* ===== LAYOUT ===== */
     .hero {
       display: grid;
-      grid-template-columns: 1fr; /* stacked */
+      grid-template-columns: 1fr; /* MOBILE: stacked */
       gap: 0;
       align-items: stretch;
     }
 
+    /* DESKTOP: side-by-side so title + text don't get squeezed by video */
     @media (min-width: 900px) {
-      .hero { grid-template-columns: 1fr; } /* keep stacked on desktop too */
+      .hero { grid-template-columns: 1.15fr 0.85fr; } /* LEFT text, RIGHT video */
     }
 
     .left {
@@ -68,7 +78,7 @@
 
     h1 {
       margin: 6px 0 0;
-      font-size: clamp(30px, 5.2vw, 52px);
+      font-size: clamp(30px, 5.2vw, 52px); /* TITLE SIZE */
       line-height: 1.08;
       text-align: center;
       color: var(--title);
@@ -86,10 +96,9 @@
       font-size: clamp(20px, 3.8vw, 40px);
     }
 
-    /* -------- TICKER -------- */
-
+    /* -------- TICKER (scroll text frame) -------- */
     .ticker {
-      height: 280px;
+      height: var(--ticker-height-mobile); /* ✅ CONTROL: TICKER HEIGHT (main setting) */
       overflow: hidden;
       position: relative;
       border: 1px solid rgba(255, 172, 28, .45);
@@ -120,7 +129,7 @@
       animation-name: scrollUp;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
-      animation-duration: var(--duration, 40s);
+      animation-duration: var(--duration, 40s); /* Speed controlled in JS */
     }
 
     @keyframes scrollUp {
@@ -148,16 +157,34 @@
     }
 
     /* -------- VIDEO -------- */
+    .right {
+      padding: 0 18px 18px;
+    }
 
-    .right { padding: 0 18px 18px; }
+    /* On desktop, align video nicely with left column */
+    @media (min-width: 900px) {
+      .right {
+        padding: 18px; /* equal padding all around for desktop */
+        display: flex;
+        align-items: stretch;
+      }
+    }
 
     .video-wrap {
       position: relative;
       width: 100%;
-      padding-top: 70%; /* Video window height */
+      padding-top: var(--video-aspect-mobile); /* ✅ CONTROL: video window height on mobile */
       background: #0a0e16;
       border-radius: 14px;
       overflow: hidden;
+    }
+
+    @media (min-width: 900px) {
+      .video-wrap {
+        padding-top: 0;      /* Desktop: let height be controlled by column height */
+        height: 100%;        /* Fill available space next to text */
+        min-height: 520px;   /* ✅ CONTROL: minimum video height on desktop */
+      }
     }
 
     .video-wrap iframe {
@@ -172,22 +199,23 @@
     .video-overlay {
       position: absolute;
       inset: 0;
-      pointer-events: none;
+      pointer-events: none; /* only buttons clickable */
     }
 
     .overlay-controls {
       position: absolute;
-      right: var(--overlay-pad);
-      bottom: var(--overlay-pad);
+      right: var(--overlay-pad);   /* ✅ CONTROL: move overlay left/right */
+      bottom: var(--overlay-pad);  /* ✅ CONTROL: move overlay up/down */
       display: flex;
-      gap: var(--overlay-gap);
+      flex-direction: column;      /* ✅ CHANGE: STACK buttons vertically */
+      gap: var(--overlay-gap);     /* ✅ CONTROL: gap between buttons */
       pointer-events: auto;
       align-items: center;
     }
 
     .overlay-btn {
-      width: var(--overlay-btn-size);
-      height: var(--overlay-btn-size);
+      width: var(--overlay-btn-size);  /* ✅ CONTROL: button size */
+      height: var(--overlay-btn-size); /* ✅ CONTROL: button size */
       border-radius: 999px;
       border: 1px solid var(--overlay-border);
       background: var(--overlay-bg);
@@ -204,24 +232,19 @@
 
     .overlay-btn:active { transform: scale(.98); }
 
-    .overlay-btn svg {
-      width: 18px;
-      height: 18px;
-      display: block;
-    }
+    .overlay-btn svg { width: 18px; height: 18px; display: block; }
 
-    /* OPTIONAL: highlight state when sound is ON */
+    /* highlight state when sound is ON */
     .overlay-btn.is-on {
-      border-color: rgba(255, 192, 0, .90); /* Sound ON border */
+      border-color: rgba(255, 192, 0, .90);
       box-shadow: 0 10px 24px rgba(255, 192, 0, .12);
     }
 
     @media (max-width: 360px) {
-      .ticker { height: 240px; }
-      .scroll-spacer { height: 90px; }
-      .video-wrap { padding-top: 78%; }
+      .ticker { height: var(--ticker-height-small); }     /* ✅ small-phone ticker height */
+      .video-wrap { padding-top: var(--video-aspect-small); } /* ✅ small-phone video height */
       :root {
-        --overlay-btn-size: 36px;
+        --overlay-btn-size: 36px; /* ✅ smaller buttons on tiny phones */
         --overlay-pad: 8px;
       }
     }
@@ -422,7 +445,6 @@ una chispa de química.
     });
 
     // ------- Vimeo mute/unmute TOGGLE -------
-    // Mobile browsers block autoplay with sound. We autoplay muted, then user can toggle sound.
     let vimeoPlayerInstance = null;
 
     function getVimeoPlayer() {
@@ -437,46 +459,42 @@ una chispa de química.
     const iconSoundOff = document.getElementById('iconSoundOff');
 
     function setSoundUI(isOn) {
-      // Visual state: border glow + icon
-      soundToggleBtn.classList.toggle('is-on', isOn);              // adds highlight when ON
-      iconSoundOn.style.display = isOn ? 'block' : 'none';         // show speaker waves
-      iconSoundOff.style.display = isOn ? 'none' : 'block';        // show muted icon
+      soundToggleBtn.classList.toggle('is-on', isOn);       // highlight when ON
+      iconSoundOn.style.display = isOn ? 'block' : 'none';  // show sound icon
+      iconSoundOff.style.display = isOn ? 'none' : 'block'; // show muted icon
       soundToggleBtn.setAttribute('aria-label', isOn ? 'Silenciar' : 'Activar sonido');
       soundToggleBtn.title = isOn ? 'Silenciar' : 'Activar sonido';
     }
 
-    // Initial UI: start muted
-    setSoundUI(false);
+    setSoundUI(false); // start muted
 
     soundToggleBtn.addEventListener('click', async () => {
       const player = getVimeoPlayer();
       if (!player) return;
 
       try {
-        const currentlyMuted = await player.getMuted(); // true/false
+        const currentlyMuted = await player.getMuted();
         const nextMuted = !currentlyMuted;
 
-        await player.setMuted(nextMuted);  // Toggle mute
+        await player.setMuted(nextMuted); // toggle mute/unmute
 
-        // If unmuting, set volume + keep playing
         if (!nextMuted) {
-          await player.setVolume(1);       // 0..1
-          await player.play();
+          await player.setVolume(1);      // volume max
+          await player.play();            // ensure it keeps playing
         }
 
-        setSoundUI(!nextMuted);            // update UI: isOn = !muted
+        setSoundUI(!nextMuted);           // isOn = !muted
       } catch (err) {
         console.log('Could not toggle sound:', err);
       }
     });
 
-    // Overlay button: open on Vimeo (fullscreen + native controls)
     document.getElementById('openVimeoBtn').addEventListener('click', () => {
       window.open('https://vimeo.com/1149058259', '_blank'); /* Vimeo page link */
     });
   </script>
 
-  <!-- Required for Vimeo API control (mute/unmute/volume/play) -->
+  <!-- Required for Vimeo API control -->
   <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
