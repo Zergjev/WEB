@@ -47,11 +47,11 @@
       gap: 0;
       align-items: stretch;
     }
-    @media (min-width: 900px) {
-      .hero { grid-template-columns: 1.2fr 1fr; } /* Desktop layout */
-      /*.hero { grid-template-columns: 1fr; } /* FULL WIDTH: keep stacked layout on desktop too */
-}
 
+    /* Desktop layout:
+       Keeping stacked full-width, same as mobile (your preference). */
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: 1fr; } /* FULL WIDTH: keep stacked layout on desktop too */
     }
 
     .left {
@@ -152,8 +152,10 @@
     .video-wrap {
       position: relative;
       width: 100%;
-      padding-top: 70%; /* Aspect ratio 16:9 (change if needed) Taller video window (more presence) */
+      padding-top: 70%; /* VIDEO WINDOW HEIGHT: bigger = taller video presence */
       background: #0a0e16;
+      border-radius: 14px; /* Matches your ticker rounding for a nicer look */
+      overflow: hidden;     /* Keeps iframe corners clean */
     }
 
     .video-wrap iframe {
@@ -164,11 +166,13 @@
       border: 0;
     }
 
-    @media (min-width: 900px) {
+    /* Since layout is stacked even on desktop, we don't need a left border divider.
+       If you later return to side-by-side layout, you can restore the divider. */
+    /* @media (min-width: 900px) {
       .video-wrap { border-left: 1px solid rgba(255, 172, 28, .25); }
-    }
+    } */
 
-    /* -------- CTA BUTTON -------- */
+    /* -------- CTA BUTTONS -------- */
 
     .cta {
       display: inline-flex;
@@ -187,10 +191,16 @@
     }
     .cta small { opacity: .9; font-weight: 600; }
 
+    /* NEW: a slightly stronger button style for the sound action (optional) */
+    .cta.cta-sound {
+      background: rgba(255, 192, 0, .22);         /* SOUND BUTTON BACKGROUND */
+      border-color: rgba(255, 192, 0, .70);       /* SOUND BUTTON BORDER */
+    }
 
     @media (max-width: 360px) {
       .ticker { height: 240px; }
       .scroll-spacer { height: 90px; }
+      .video-wrap { padding-top: 78%; } /* Slightly taller on very small phones */
     }
   </style>
 </head>
@@ -312,19 +322,20 @@ una chispa de química.
           </div>
         </div>
 
-        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo con sonido)</small></a>
+        <!-- NEW BUTTON 1: UNMUTE (mobile requires a user tap to enable sound) -->
+        <a class="cta cta-sound" href="#" id="soundBtn">🔊 Activar sonido <small>(tap para escuchar)</small></a>
+
+        <!-- EXISTING BUTTON 2: OPEN ON VIMEO (always lets user control sound/fullscreen there) -->
+        <a class="cta" href="#" id="cta">Ver video <small>(abrir en Vimeo)</small></a>
       </div>
 
       <div class="right">
         <div class="video-wrap">
           <!-- VIMEO EMBED (mobile-friendly autoplay):
-               KEY PARAMS:
-               - autoplay=1  : try to start immediately
-               - muted=1     : REQUIRED for autoplay on iPhone/Safari
-               - loop=1      : loops
-               - background=1: cleaner autoplay behavior (no UI, behaves like a background video)
-               - autopause=0 : prevents Vimeo pausing it when it thinks it lost focus
-               If you want UI controls later, remove background=1 and set controls=1 (requires plan/settings). -->
+               IMPORTANT:
+               - muted=1 is REQUIRED for autoplay on iPhone/Safari (browser rule)
+               - sound can only be enabled AFTER a user tap (we do that with the button above)
+               - background=1 keeps it clean and autoplay-friendly -->
           <iframe
             id="vimeoPlayer"
             src="https://player.vimeo.com/video/1149058259?autoplay=1&muted=1&loop=1&background=1&autopause=0&badge=0&player_id=0&app_id=58479"
@@ -369,17 +380,42 @@ una chispa de química.
       window.__tickerTimer = setTimeout(syncTicker, 150);
     });
 
-    // CTA: open Vimeo page (this is where users can unmute / play with sound)
+    // ------- VIMEO SOUND CONTROL (UNMUTE) -------
+    // Mobile browsers DO NOT allow autoplay with sound.
+    // Solution: autoplay muted + user taps "Activar sonido" -> unmute + volume + keep playing.
+    let vimeoPlayerInstance = null;
+
+    function getVimeoPlayer() {
+      // Vimeo.Player is provided by https://player.vimeo.com/api/player.js
+      if (!vimeoPlayerInstance && window.Vimeo && window.Vimeo.Player) {
+        const iframe = document.getElementById('vimeoPlayer');
+        vimeoPlayerInstance = new window.Vimeo.Player(iframe);
+      }
+      return vimeoPlayerInstance;
+    }
+
+    document.getElementById('soundBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const player = getVimeoPlayer();
+      if (!player) return;
+
+      try {
+        await player.setMuted(false);  // UNMUTE (requires user gesture)
+        await player.setVolume(1);     // VOLUME: 0..1
+        await player.play();           // Ensure it continues playing
+      } catch (err) {
+        console.log('Could not unmute Vimeo player:', err);
+      }
+    });
+
+    // CTA: open Vimeo page (always gives user full sound controls there)
     document.getElementById('cta').addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('https://vimeo.com/1149058259', '_blank');
+      window.open('https://vimeo.com/1149058259', '_blank'); // MUST match the same Vimeo ID as the embed
     });
   </script>
 
-  <!-- OPTIONAL:
-       Vimeo Player API. Only needed if later you want to add play/pause buttons, etc.
-       Keeping it here does not hurt. -->
+  <!-- REQUIRED for the "Activar sonido" button to control Vimeo -->
   <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
-
