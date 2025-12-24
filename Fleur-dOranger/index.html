@@ -485,7 +485,16 @@ una chispa de química.
 
     function getVimeoPlayer() {
       if (!vimeoPlayerInstance && window.Vimeo && window.Vimeo.Player) {
-        vimeoPlayerInstance = new window.Vimeo.Player(document.getElementById('vimeoPlayer'));
+        const iframe = document.getElementById('vimeoPlayer');
+        vimeoPlayerInstance = new window.Vimeo.Player(iframe);
+
+    /* 🔑 FIX: ensure autoplay runs on first load */
+        vimeoPlayerInstance.ready().then(() => {
+          vimeoPlayerInstance.setMuted(true); // REQUIRED for autoplay
+          vimeoPlayerInstance.play().catch(() => {
+        /* silently fail if browser blocks — no UX break */
+          });
+        });
       }
       return vimeoPlayerInstance;
     }
